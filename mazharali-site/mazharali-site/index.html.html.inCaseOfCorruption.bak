@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مظهر علي - متجرك الإلكتروني المفضل</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Cairo', 'sans-serif'] },
+                    colors: {
+                        primary: '#fcb800',
+                        secondary: '#222222',
+                        accent: '#ff4d4f',
+                        dark: '#1a1a1a',
+                        light: '#f5f5f5'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Cairo', sans-serif; }
+        .hero-slider { position: relative; overflow: hidden; }
+        .slide { display: none; animation: fade 0.8s ease; }
+        .slide.active { display: block; }
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        .product-card:hover .product-actions { opacity: 1; transform: translateY(0); }
+        .product-actions { opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
+        .category-item:hover .submenu { display: block; }
+        .submenu { display: none; position: absolute; right: 100%; top: 0; width: 250px; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.1); z-index: 50; border-radius: 8px; }
+        .countdown-item { background: #222; color: #fcb800; padding: 8px 12px; border-radius: 4px; font-weight: 700; }
+        .scroll-hidden::-webkit-scrollbar { display: none; }
+        .scroll-hidden { -ms-overflow-style: none; scrollbar-width: none; }
+        .banner-hover:hover img { transform: scale(1.05); }
+        .banner-hover img { transition: transform 0.5s ease; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Top Bar -->
+    <div class="bg-secondary text-white text-sm py-2">
+        <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span><i class="fas fa-phone-alt ml-2 text-primary"></i> 0155xxxxxxx</span>
+                <span><i class="fas fa-envelope ml-2 text-primary"></i> info@mazharali.com</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span><i class="fas fa-truck ml-2 text-primary"></i> توصيل مجاني للطلبات فوق 500 جنيه</span>
+                <span class="hidden md:inline">|</span>
+                <a href="#" class="hover:text-primary transition">تتبع مشترياتك</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between gap-4">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 shrink-0">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shopping-bag text-secondary text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-secondary leading-none">مظهر علي</h1>
+                        <span class="text-xs text-gray-500">متجرك الإلكتروني</span>
+                    </div>
+                </a>
+
+                <!-- Search -->
+                <div class="hidden md:flex flex-1 max-w-2xl mx-4">
+                    <div class="flex w-full border-2 border-primary rounded-lg overflow-hidden">
+                        <select class="bg-gray-100 px-4 py-3 text-sm border-l border-gray-200 outline-none cursor-pointer">
+                            <option>جميع الأقسام</option>
+                            <option>إلكترونيات</option>
+                            <option>ملابس</option>
+                            <option>أجهزة منزلية</option>
+                        </select>
+                        <input type="text" placeholder="أنا أتسوق عن..." class="flex-1 px-4 py-3 outline-none text-sm">
+                        <button class="bg-primary px-6 text-secondary font-bold hover:bg-yellow-400 transition">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <button class="relative p-2 hover:bg-gray-100 rounded-full transition">
+                        <i class="far fa-heart text-xl text-secondary"></i>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white text-xs rounded-full flex items-center justify-center">3</span>
+                    </button>
+                    <button class="relative p-2 hover:bg-gray-100 rounded-full transition" onclick="toggleCart()">
+                        <i class="fas fa-shopping-cart text-xl text-secondary"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white text-xs rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <div class="hidden md:flex items-center gap-2">
+                        <button class="text-sm font-semibold text-secondary hover:text-primary transition">تسجيل الدخول</button>
+                        <span class="text-gray-300">|</span>
+                        <button class="text-sm font-semibold text-secondary hover:text-primary transition">الإشتراك</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-secondary text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center gap-6">
+                <button class="bg-primary text-secondary px-6 py-3 font-bold flex items-center gap-2 hover:bg-yellow-400 transition">
+                    <i class="fas fa-bars"></i>
+                    التسوق حسب الأقسام
+                </button>
+                <div class="hidden lg:flex items-center gap-6 text-sm font-medium">
+                    <a href="#" class="text-primary">الرئيسية</a>
+                    <a href="#" class="hover:text-primary transition">السوق</a>
+                    <a href="#" class="hover:text-primary transition">العروض</a>
+                    <a href="#" class="hover:text-primary transition">الأكثر مبيعاً</a>
+                    <a href="#" class="hover:text-primary transition">اتصل بنا</a>
+                </div>
+                <div class="mr-auto flex items-center gap-4 text-sm">
+                    <span><i class="fas fa-fire text-primary ml-1"></i> عروض ساخنة</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Banner -->
+    <div class="bg-gradient-to-r from-primary to-yellow-400 py-3">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-secondary font-bold text-lg">
+                <i class="fas fa-gift ml-2"></i>
+                أهلاً وسهلاً بكم في مظهر علي — وجهتك الأولى للتسوق الإلكتروني!
+                <span class="hidden md:inline mx-4">|</span>
+                <span class="text-sm font-normal">استخدم كود <strong class="bg-secondary text-white px-2 py-0.5 rounded">WELCOME20</strong> لخصم 20%</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Categories Sidebar -->
+            <div class="hidden lg:block bg-white rounded-xl shadow-sm overflow-hidden h-fit">
+                <div class="p-4 bg-secondary text-white font-bold">
+                    <i class="fas fa-list ml-2"></i> التصنيفات
+                </div>
+                <ul class="divide-y divide-gray-100">
+                    <li class="category-item relative">
+                        <a href="#" class="flex items-center justify-between px-4 py-3 hover:bg-gray-50 hover:text-primary transition">
+                            <span><i class="fas fa-mobile-alt w-6 text-gray-400"></i> الهواتف الذكية</span>
+                            <i class="fas fa-chevron-left text-xs text-gray-300"></i>
+                        </a>
+                        <div class="submenu p-4">
+                            <h4 class="font-bold mb-3 text-secondary">الهواتف الذكية</h4>
+                            <a href="#" class="block py-1 text-sm hover:text-primary">iOS</a>
+                            <a href="#" class="block py-1 text-sm hover:text-primary">Android</a>
+                            <a href="#" class="block py-1 text-sm hover:text-primary">إكسسوارات</a>
+                        </div>
+                    </li>
+                    <li class="category-item relative">
+                        <a href="#" class="flex items-center justify-between px-4 py-3 hover:bg-gray-50 hover:text-primary transition">
+                            <span><i class="fas fa-laptop w-6 text-gray-400"></i> أجهزة الكمبيوتر</span>
+                            <i class="fas fa-chevron-left text-xs text-gray-300"></i>
+                        </a>
+                        <div class="submenu p-4">
+                            <h4 class="font-bold mb-3 text-secondary">الكمبيوتر</h4>
+                            <a href="#" class="block py-1 text-sm hover:text-primary">لابتوب</a>
+                            <a href="#" class="block py-1 text-sm hover:text-primary">شاشات</a>
+                            <a href="#" class="block py-1 text-sm hover:text-primary">ملحقات</a>
+                        </div>
+                    </li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-tv w-6 text-gray-400"></i> تلفزيونات وشاشات</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-headphones w-6 text-gray-400"></i> سماعات وأجهزة صوت</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-tshirt w-6 text-gray-400"></i> ملابس وأزياء</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-couch w-6 text-gray-400"></i> أثاث منزلي</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-heartbeat w-6 text-gray-400"></i> صحة وجمال</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-clock w-6 text-gray-400"></i> ساعات ومجوهرات</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-car w-6 text-gray-400"></i> سيارات ودراجات</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-3 hover:bg-gray-50 hover:text-primary transition"><i class="fas fa-futbol w-6 text-gray-400"></i> رياضة وخارجية</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Slider -->
+            <div class="lg:col-span-3">
+                <div class="hero-slider rounded-xl overflow-hidden shadow-lg h-[400px] relative">
+                    <!-- Slide 1 -->
+                    <div class="slide active h-full relative">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&h=400&fit=crop" alt="Banner 1" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent flex items-center">
+                            <div class="p-8 md:p-12 text-white max-w-lg">
+                                <span class="bg-primary text-secondary px-3 py-1 rounded-full text-sm font-bold mb-4 inline-block">عرض محدود</span>
+                                <h2 class="text-3xl md:text-4xl font-extrabold mb-3">أفضل منتجات الإلكترونيات</h2>
+                                <p class="text-gray-200 mb-6">اكتشف أحدث الأجهزة الذكية بأسعار لا تُقاوم</p>
+                                <button class="bg-primary text-secondary px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">تسوق الآن</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slide h-full relative">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=900&h=400&fit=crop" alt="Banner 2" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent flex items-center">
+                            <div class="p-8 md:p-12 text-white max-w-lg">
+                                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold mb-4 inline-block">خصم 40%</span>
+                                <h2 class="text-3xl md:text-4xl font-extrabold mb-3">تشكيلة الأزياء الجديدة</h2>
+                                <p class="text-gray-200 mb-6">أحدث صيحات الموضة للرجال والنساء</p>
+                                <button class="bg-primary text-secondary px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">اكتشف المزيد</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slide h-full relative">
+                        <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=900&h=400&fit=crop" alt="Banner 3" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent flex items-center">
+                            <div class="p-8 md:p-12 text-white max-w-lg">
+                                <span class="bg-primary text-secondary px-3 py-1 rounded-full text-sm font-bold mb-4 inline-block">جديد</span>
+                                <h2 class="text-3xl md:text-4xl font-extrabold mb-3">أثاث منزلي فاخر</h2>
+                                <p class="text-gray-200 mb-6">حوّل منزلك إلى تحفة فنية مع تشكيلتنا</p>
+                                <button class="bg-primary text-secondary px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">تسوق الآن</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slider Controls -->
+                    <button onclick="changeSlide(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white text-white hover:text-secondary rounded-full flex items-center justify-center transition backdrop-blur-sm">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button onclick="changeSlide(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white text-white hover:text-secondary rounded-full flex items-center justify-center transition backdrop-blur-sm">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                        <span class="w-3 h-3 rounded-full bg-white/50 cursor-pointer hover:bg-primary transition dot active" onclick="goToSlide(0)"></span>
+                        <span class="w-3 h-3 rounded-full bg-white/50 cursor-pointer hover:bg-primary transition dot" onclick="goToSlide(1)"></span>
+                        <span class="w-3 h-3 rounded-full bg-white/50 cursor-pointer hover:bg-primary transition dot" onclick="goToSlide(2)"></span>
+                    </div>
+                </div>
+
+                <!-- Promo Banners Below Slider -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                    <div class="banner-hover rounded-xl overflow-hidden relative h-32 cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=200&fit=crop" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex flex-col justify-center px-6 text-white">
+                            <span class="text-primary font-bold text-sm">خصم 20%</span>
+                            <h3 class="font-bold">سماعات لاسلكية</h3>
+                        </div>
+                    </div>
+                    <div class="banner-hover rounded-xl overflow-hidden relative h-32 cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=200&fit=crop" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex flex-col justify-center px-6 text-white">
+                            <span class="text-primary font-bold text-sm">جديد</span>
+                            <h3 class="font-bold">ساعات ذكية</h3>
+                        </div>
+                    </div>
+                    <div class="banner-hover rounded-xl overflow-hidden relative h-32 cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=200&fit=crop" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex flex-col justify-center px-6 text-white">
+                            <span class="text-primary font-bold text-sm">عرض خاص</span>
+                            <h3 class="font-bold">أحذية رياضية</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-6 rounded-xl shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl shrink-0">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary">توصيل مجاني</h4>
+                    <p class="text-sm text-gray-500">للطلبات فوق 500 ج.م</p>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl shrink-0">
+                    <i class="fas fa-undo-alt"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary">إرجاع خلال 30 يوم</h4>
+                    <p class="text-sm text-gray-500">إذا كانت السلع بها مشاكل</p>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl shrink-0">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary">دفع آمن 100%</h4>
+                    <p class="text-sm text-gray-500">حماية كاملة للمدفوعات</p>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl shrink-0">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary">دعم 24/7</h4>
+                    <p class="text-sm text-gray-500">دعم مخصص على مدار الساعة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deals of the Day -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-2xl font-extrabold text-secondary">صفقات اليوم</h2>
+                    <div class="flex gap-2" id="countdown">
+                        <div class="countdown-item" id="hours">04</div>
+                        <span class="text-2xl font-bold text-secondary">:</span>
+                        <div class="countdown-item" id="minutes">32</div>
+                        <span class="text-2xl font-bold text-secondary">:</span>
+                        <div class="countdown-item" id="seconds">15</div>
+                    </div>
+                </div>
+                <a href="#" class="text-primary font-bold hover:underline">عرض الكل <i class="fas fa-arrow-left mr-1"></i></a>
+            </div>
+            <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Deal Product 1 -->
+                <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=300&fit=crop" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 right-3 bg-accent text-white text-xs font-bold px-2 py-1 rounded">-13%</span>
+                        <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                            <button onclick="addToCart()" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition" title="أضف للسلة">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition" title="المفضلة">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-secondary hover:text-white transition" title="مقارنة">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-gray-400 mb-1">الهواتف الذكية</p>
+                        <h3 class="font-bold text-secondary mb-2 line-clamp-2 hover:text-primary cursor-pointer transition">آيفون XS ماكس 256 جيجا مع فيس تايم</h3>
+                        <div class="flex items-center gap-1 mb-2">
+                            <div class="flex text-primary text-xs">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <span class="text-xs text-gray-400">(4.0)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-extrabold text-secondary">1,750 ج.م</span>
+                            <span class="text-sm text-gray-400 line-through">2,000 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Deal Product 2 -->
+                <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=300&h=300&fit=crop" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 right-3 bg-accent text-white text-xs font-bold px-2 py-1 rounded">-25%</span>
+                        <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                            <button onclick="addToCart()" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition"><i class="far fa-heart"></i></button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-secondary hover:text-white transition"><i class="fas fa-exchange-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-gray-400 mb-1">سماعات</p>
+                        <h3 class="font-bold text-secondary mb-2 line-clamp-2 hover:text-primary cursor-pointer transition">سماعة ستيريو لاسلكية من بروميت</h3>
+                        <div class="flex items-center gap-1 mb-2">
+                            <div class="flex text-primary text-xs">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-xs text-gray-400">(5.0)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-extrabold text-secondary">159 ج.م</span>
+                            <span class="text-sm text-gray-400 line-through">299 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Deal Product 3 -->
+                <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1593642632823-8f78536788c6?w=300&h=300&fit=crop" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 right-3 bg-accent text-white text-xs font-bold px-2 py-1 rounded">-40%</span>
+                        <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                            <button onclick="addToCart()" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition"><i class="far fa-heart"></i></button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-secondary hover:text-white transition"><i class="fas fa-exchange-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-gray-400 mb-1">لابتوب</p>
+                        <h3 class="font-bold text-secondary mb-2 line-clamp-2 hover:text-primary cursor-pointer transition">لابتوب للألعاب مع معالج i7 وكرت شاشة RTX</h3>
+                        <div class="flex items-center gap-1 mb-2">
+                            <div class="flex text-primary text-xs">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <span class="text-xs text-gray-400">(4.2)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-extrabold text-secondary">3,499 ج.م</span>
+                            <span class="text-sm text-gray-400 line-through">5,800 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Deal Product 4 -->
+                <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=300&h=300&fit=crop" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 right-3 bg-accent text-white text-xs font-bold px-2 py-1 rounded">-18%</span>
+                        <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                            <button onclick="addToCart()" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition"><i class="far fa-heart"></i></button>
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-secondary hover:text-white transition"><i class="fas fa-exchange-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-gray-400 mb-1">كاميرات</p>
+                        <h3 class="font-bold text-secondary mb-2 line-clamp-2 hover:text-primary cursor-pointer transition">كاميرا احترافية DSLR بعدسة 50mm</h3>
+                        <div class="flex items-center gap-1 mb-2">
+                            <div class="flex text-primary text-xs">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-xs text-gray-400">(4.7)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-extrabold text-secondary">2,899 ج.م</span>
+                            <span class="text-sm text-gray-400 line-through">3,500 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Showcase -->
+    <section class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-extrabold text-secondary mb-6">تسوق حسب التصنيف</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">إلكترونيات</span>
+            </a>
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">ملابس</span>
+            </a>
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1498049860654-af1a5c5668ba?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">أجهزة كمبيوتر</span>
+            </a>
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">منزل ومطبخ</span>
+            </a>
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">صحة وجمال</span>
+            </a>
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">ساعات</span>
+            </a>
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">ألعاب</span>
+            </a>
+            <a href="#" class="group text-center">
+                <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition mb-2 group-hover:-translate-y-1 duration-300">
+                    <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?w=150&h=150&fit=crop" class="w-full h-20 object-contain mb-2">
+                </div>
+                <span class="text-sm font-semibold text-secondary group-hover:text-primary transition">هواتف</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-extrabold text-secondary">الأكثر مبيعاً</h2>
+            <div class="flex gap-2">
+                <button class="px-4 py-2 bg-primary text-secondary rounded-lg font-bold text-sm">الكل</button>
+                <button class="px-4 py-2 bg-white text-gray-600 rounded-lg font-bold text-sm hover:bg-gray-100 transition">إلكترونيات</button>
+                <button class="px-4 py-2 bg-white text-gray-600 rounded-lg font-bold text-sm hover:bg-gray-100 transition">ملابس</button>
+                <button class="px-4 py-2 bg-white text-gray-600 rounded-lg font-bold text-sm hover:bg-gray-100 transition">منزل</button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            <!-- Product 1 -->
+            <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                        <button onclick="addToCart()" class="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition text-sm"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition text-sm"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-sm text-secondary mb-1 line-clamp-2 hover:text-primary cursor-pointer transition">سماعة رأس لاسلكية فاخرة</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="font-extrabold text-secondary">349 ج.م</span>
+                        <div class="flex text-primary text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=300&h=300&fit=crop" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-2 right-2 bg-accent text-white text-[10px] font-bold px-2 py-0.5 rounded">جديد</span>
+                    <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                        <button onclick="addToCart()" class="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition text-sm"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition text-sm"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-sm text-secondary mb-1 line-clamp-2 hover:text-primary cursor-pointer transition">ساعة ذكية متعددة الوظائف</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="font-extrabold text-secondary">199 ج.م</span>
+                        <div class="flex text-primary text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300&h=300&fit=crop" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                        <button onclick="addToCart()" class="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition text-sm"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition text-sm"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-sm text-secondary mb-1 line-clamp-2 hover:text-primary cursor-pointer transition">كريم العناية بالبشرة الطبيعي</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="font-extrabold text-secondary">89 ج.م</span>
+                        <div class="flex text-primary text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 4 -->
+            <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=300&h=300&fit=crop" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-2 right-2 bg-accent text-white text-[10px] font-bold px-2 py-0.5 rounded">-15%</span>
+                    <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                        <button onclick="addToCart()" class="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition text-sm"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition text-sm"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-sm text-secondary mb-1 line-clamp-2 hover:text-primary cursor-pointer transition">جاكيت شتوي أنيق للرجال</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="font-extrabold text-secondary">279 ج.م</span>
+                        <div class="flex text-primary text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-card group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=300&h=300&fit=crop" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="product-actions absolute bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-sm flex justify-center gap-2">
+                        <button onclick="addToCart()" class="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition text-sm"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition text-sm"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-sm text-secondary mb-1 line-clamp-2 hover:text-primary cursor-pointer transition">كاميرا فورية مع طابعات</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="font-extrabold text-secondary">459 ج.م</span>
+                        <div class="flex text-primary text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Big Promo Banner -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="banner-hover rounded-2xl overflow-hidden relative h-64 cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1550009158-9ebf690be655?w=600&h=300&fit=crop" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 text-white">
+                    <span class="bg-primary text-secondary px-3 py-1 rounded-full text-sm font-bold w-fit mb-2">خصم 25%</span>
+                    <h3 class="text-2xl font-extrabold mb-1">أثاث فاخر للمنزل</h3>
+                    <p class="text-gray-300 text-sm mb-3">تشكيلة جديدة من الأثاث العصري بأسعار مذهلة</p>
+                    <button class="bg-white text-secondary px-6 py-2 rounded-lg font-bold w-fit hover:bg-primary transition">تسوق الآن</button>
+                </div>
+            </div>
+            <div class="banner-hover rounded-2xl overflow-hidden relative h-64 cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=300&fit=crop" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 text-white">
+                    <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold w-fit mb-2">عرض محدود</span>
+                    <h3 class="text-2xl font-extrabold mb-1">أجهزة ماك بوك برو</h3>
+                    <p class="text-gray-300 text-sm mb-3">أقوى أداء مع أحدث معالجات آبل</p>
+                    <button class="bg-white text-secondary px-6 py-2 rounded-lg font-bold w-fit hover:bg-primary transition">اكتشف المزيد</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="bg-secondary rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-48 h-48 bg-primary/10 rounded-full translate-x-1/3 translate-y-1/3"></div>
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <i class="fas fa-envelope-open-text text-5xl text-primary mb-4"></i>
+                <h2 class="text-3xl font-extrabold mb-3">اشترك في نشرتنا الإخبارية</h2>
+                <p class="text-gray-400 mb-6">احصل على أحدث العروض والخصومات مباشرة إلى بريدك الإلكتروني</p>
+                <div class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <input type="email" placeholder="أدخل بريدك الإلكتروني" class="flex-1 px-5 py-3 rounded-lg text-secondary outline-none">
+                    <button class="bg-primary text-secondary px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">اشترك الآن</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white mt-12">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <i class="fas fa-shopping-bag text-secondary text-lg"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold">مظهر علي</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        متجرك الإلكتروني الموثوق لشراء أفضل المنتجات بأفضل الأسعار. نوفر لك تجربة تسوق سهلة وآمنة مع توصيل سريع لجميع المناطق.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-secondary transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-secondary transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-secondary transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-secondary transition"><i class="fab fa-snapchat-ghost"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">روابط سريعة</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-primary transition">الرئيسية</a></li>
+                        <li><a href="#" class="hover:text-primary transition">عن المتجر</a></li>
+                        <li><a href="#" class="hover:text-primary transition">المنتجات</a></li>
+                        <li><a href="#" class="hover:text-primary transition">العروض والخصومات</a></li>
+                        <li><a href="#" class="hover:text-primary transition">الأسئلة الشائعة</a></li>
+                        <li><a href="#" class="hover:text-primary transition">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">خدمة العملاء</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-primary transition">حسابي</a></li>
+                        <li><a href="#" class="hover:text-primary transition">تتبع الطلب</a></li>
+                        <li><a href="#" class="hover:text-primary transition">سياسة الإرجاع</a></li>
+                        <li><a href="#" class="hover:text-primary transition">شروط الاستخدام</a></li>
+                        <li><a href="#" class="hover:text-primary transition">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="hover:text-primary transition">الدعم الفني</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">تواصل معنا</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-primary mt-1"></i>
+                            <span>القاهرة، جمهورية مصر العربية</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-primary"></i>
+                            <span>0155xxxxxxx</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span>info@mazharali.com</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-clock text-primary"></i>
+                            <span>الأحد - الخميس: 9 ص - 11 م</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-400 text-sm">© 2026 مظهر علي. جميع الحقوق محفوظة.</p>
+                <div class="flex items-center gap-4">
+                    <i class="fab fa-cc-visa text-3xl text-gray-400"></i>
+                    <i class="fab fa-cc-mastercard text-3xl text-gray-400"></i>
+                    <i class="fab fa-cc-paypal text-3xl text-gray-400"></i>
+                    <i class="fab fa-cc-apple-pay text-3xl text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300">
+        <div class="p-4 border-b flex items-center justify-between">
+            <h3 class="font-bold text-lg">سلة التسوق</h3>
+            <button onclick="toggleCart()" class="w-8 h-8 hover:bg-gray-100 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="cart-items" class="p-4 space-y-4 overflow-y-auto h-[calc(100%-140px)]">
+            <div class="text-center text-gray-400 py-8">
+                <i class="fas fa-shopping-basket text-4xl mb-2"></i>
+                <p>السلة فارغة</p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t bg-white">
+            <div class="flex justify-between mb-3 font-bold">
+                <span>المجموع:</span>
+                <span id="cart-total">0 ج.م</span>
+            </div>
+            <button class="w-full bg-primary text-secondary py-3 rounded-lg font-bold hover:bg-yellow-400 transition">إتمام الشراء</button>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-secondary text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i class="fas fa-check-circle text-primary"></i>
+        <span id="toast-msg">تمت الإضافة للسلة!</span>
+    </div>
+
+    <script>
+        // Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(n) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active', 'bg-primary'));
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active', 'bg-primary');
+        }
+
+        function changeSlide(n) { showSlide(currentSlide + n); }
+        function goToSlide(n) { showSlide(n); }
+        setInterval(() => changeSlide(1), 5000);
+
+        // Countdown
+        function updateCountdown() {
+            const now = new Date();
+            const end = new Date();
+            end.setHours(23, 59, 59);
+            let diff = end - now;
+            if (diff < 0) diff = 0;
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('hours').textContent = String(h).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Cart
+        let cart = [];
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function addToCart() {
+            cart.push({ name: 'منتج جديد', price: 199 });
+            document.getElementById('cart-count').textContent = cart.length;
+            showToast('تمت إضافة المنتج إلى السلة!');
+            updateCartItems();
+        }
+
+        function updateCartItems() {
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-400 py-8"><i class="fas fa-shopping-basket text-4xl mb-2"></i><p>السلة فارغة</p></div>';
+                document.getElementById('cart-total').textContent = '0 ج.م';
+                return;
+            }
+            let html = '';
+            let total = 0;
+            cart.forEach((item, i) => {
+                total += item.price;
+                html += `<div class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                    <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center"><i class="fas fa-box text-gray-400"></i></div>
+                    <div class="flex-1"><p class="text-sm font-bold">${item.name}</p><p class="text-xs text-gray-500">${item.price} ج.م</p></div>
+                    <button onclick="removeFromCart(${i})" class="text-gray-400 hover:text-accent"><i class="fas fa-trash-alt"></i></button>
+                </div>`;
+            });
+            container.innerHTML = html;
+            document.getElementById('cart-total').textContent = total + ' ج.م';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            document.getElementById('cart-count').textContent = cart.length;
+            updateCartItems();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
+        }
+    </script>
+</body>
+</html>
